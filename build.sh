@@ -1,5 +1,9 @@
 #!/bin/bash
 
+SRCDIR="src"
+OUTDIR="out"
+TMPDIR=".tmp"
+
 if [ ! -f "QFS2BMP.exe" ]; then
     echo "ERROR: QFS2BMP.exe not found! Please copy the tool into this directory"
     exit 1
@@ -10,32 +14,30 @@ if [ ! -f "/usr/bin/wine" ]; then
     exit 1
 fi
 
-if [ -d tmp ]; then
-    rm -rf tmp
-fi
+[ -d "$TMPDIR" ] || mkdir "$TMPDIR"
+[ -d "$OUTDIR/tools" ] || mkdir -p "$OUTDIR/tools"
+[ -d "$OUTDIR/fedata/pc/art/slides" ] || mkdir -p "$OUTDIR/fedata/pc/art/slides"
 
-mkdir tmp
+gcc src/tools/fshtool.c -o "$OUTDIR/tools/fshtool"
 
-SLIDES=$(find "./src/fedata/pc/art/slides" -name "*.png")
+### BUILD THE SLIDES
+
+SLIDES=$(find "$SRCDIR/fedata/pc/art/slides" -name "*.png")
 
 for SLIDE in $SLIDES ; do
     FILE=$(basename $SLIDE)
     NAME=${FILE%.*}
 
-    BMP_PATH="./tmp/$NAME.bmp"
-    QFS_PATH="./out/fedata/pc/slides/$NAME.qfs"
+    BMPDIR="$TMPDIR/fedata/pc/slides/$NAME"
+    [ -d "$BMPDIR" ] || mkdir -p "$BMPDIR"
 
-    if [ ! -d "./out/fedata/pc/slides" ]; then
-        mkdir -p "./out/fedata/pc/slides"
-    fi
+    cp "$SRCDIR/fedata/pc/art/slides/index.fsh" "$BMPDIR"
 
-    echo $BMP_PATH
-    convert $SLIDE BMP3:"./tmp/$NAME.bmp"
-    yes | wine QFS2BMP.exe -e $BMP_PATH $QFS_PATH
-    rm $BMP_PATH
+    echo ">> Building $SLIDE..."
+    convert $SLIDE BMP3:"$BMPDIR/0000.BMP"
+    yes | "$OUTDIR/tools/fshtool" "$BMPDIR/index.fsh" "./$OUTDIR/fedata/pc/art/slides/$NAME.qfs"
 done
 
-if [ -d tmp ]; then
-    rm -rf tmp
-fi
+### BUILD FINISHED
 
+[ ! -d "$TMPDIR" ] || rm -rf "$TMPDIR"
