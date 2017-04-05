@@ -4,16 +4,6 @@ SRCDIR="src"
 OUTDIR="out"
 TMPDIR=".tmp"
 
-if [ ! -f "QFS2BMP.exe" ]; then
-    echo "ERROR: QFS2BMP.exe not found! Please copy the tool into this directory"
-    exit 1
-fi
-
-if [ ! -f "/usr/bin/wine" ]; then
-    echo "ERROR: WINE not installed. Please install it in order to build the assets"
-    exit 1
-fi
-
 [ -d "$TMPDIR" ] || mkdir "$TMPDIR"
 [ -d "$OUTDIR/tools" ] || mkdir -p "$OUTDIR/tools"
 [ -d "$OUTDIR/fedata/pc/art/slides" ] || mkdir -p "$OUTDIR/fedata/pc/art/slides"
