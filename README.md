@@ -2,9 +2,22 @@
 
 This is a project based on [NFSIISE](https://github.com/zaps166/NFSIISE) that aims to provide additional functionality on top of what the original game has to offer.
 
+# Goals
+
+- New languages
+- Completely replace all of the original assets with HD open-source ones
+- Additional content (tracks, cars, etc...)
+
+# Contributions
+
+Anyone is free to contribute to this project.
+
+You can find information about the file formats, conventions, and how to edit different aspects of the game, on the [Wiki pages](https://github.com/HoratiuMl/NFS2EE/wiki) of this project.
+
 # Asset Editors
 
 Here is a list of tested and trusted asset editors that can be used to edit NFS2 assets.
+For more details and instructions, please check out the [Wiki pages](https://github.com/HoratiuMl/NFS2EE/wiki).
 
 | Editor | Version | Description |
 |--------|---------|-------------|
