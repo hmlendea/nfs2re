@@ -1,11 +1,10 @@
-# NFSIISE-Assets
-Open-source assets for the NFSIISE project
+# Need for Speed 2 Extended Edition
 
-The main project: https://github.com/zaps166/NFSIISE
+This is a project based on [NFSIISE](https://github.com/zaps166/NFSIISE) that aims to provide additional functionality on top of what the original game has to offer.
 
-# Editors
+# Asset Editors
 
-Here is a list of tested and trusted editors that can be used to edit NFS2 assets.
+Here is a list of tested and trusted asset editors that can be used to edit NFS2 assets.
 
 | Editor | Version | Description |
 |--------|---------|-------------|
