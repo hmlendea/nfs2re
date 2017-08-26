@@ -21,6 +21,6 @@ For more details and instructions, please check out the [Wiki pages](https://git
 
 | Editor | Version | Description |
 |--------|---------|-------------|
-| [NFS2 Tools](hhttps://github.com/HoratiuMl/nfs2tools) | WIP | Multipurpose NFS2 Tool |
+| [NFS2 Tools](https://github.com/HoratiuMl/nfs2tools) | WIP | Multipurpose NFS2 Tool |
 | [FSH Tool](http://math.mit.edu/~auroux/software/fshtool.zip) | 1.22 | FSH and QFS encoder/decoder |
 | [NFSStrings](http://web.archive.org/web/20080623221127/http://nfsgb.nd4spdworld.com/zip/nfs3/files/nfsstring.zip) | 1.05.015 | Language file editor |
