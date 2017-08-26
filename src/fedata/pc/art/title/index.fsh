@@ -1,0 +1,22 @@
+FSHTool generated file -- be very careful when editing
+title.qfs
+QFS
+SHPI 7 objects, tag GIMX
+BUFSZ 1263176
+NOGLOBPAL
+back 0000.BMP
+BMP 78 +0 640 480 {0 0 0 0}
+engl 0001.BMP
+BMP 78 +0 295 36 {-172 -423 172 423}
+germ 0002.BMP
+BMP 78 +0 335 38 {-152 -422 152 422}
+fren 0003.BMP
+BMP 78 +0 315 39 {-161 -420 161 420}
+!PAD 2 0000
+itly 0004.BMP
+BMP 78 +0 320 37 {-160 -422 160 422}
+span 0005.BMP
+BMP 78 +0 376 36 {-130 -422 130 422}
+swed 0006.BMP
+BMP 78 +0 369 36 {-134 -421 134 421}
+#END
