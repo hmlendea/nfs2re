@@ -12,7 +12,7 @@ This is a project based on [NFSIISE](https://github.com/zaps166/NFSIISE) that ai
 
 Anyone is free to contribute to this project.
 
-You can find information about the file formats, conventions, and how to edit different aspects of the game, on the [Wiki pages](https://github.com/HoratiuMl/nfs2tools/wiki) of this project.
+You can find information about the file formats, conventions, and how to edit different aspects of the game, on the [NFS2Tools Wiki pages](https://github.com/HoratiuMl/nfs2tools/wiki) of this project.
 
 # Asset Editors
 
