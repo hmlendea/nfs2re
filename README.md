@@ -1,4 +1,4 @@
-# Need for Speed 2 Extended Edition
+# Need for Speed 2 Remastered Edition
 
 This is a project based on [NFSIISE](https://github.com/zaps166/NFSIISE) that aims to provide additional functionality on top of what the original game has to offer.
 
