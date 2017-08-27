@@ -2,7 +2,7 @@ FSHTool generated file -- be very careful when editing
 main.qfs
 QFS
 SHPI 154 objects, tag GIMX
-BUFSZ 4430428
+BUFSZ 4450428
 NOGLOBPAL
 blk4 0000.BMP
 BMP 78 +0 640 480 {0 0 0 0}
@@ -359,8 +359,7 @@ BMP 7B +1 85 22 {-342 -143 342 143}
 !PAD 2 0000
 PAL 2A 256 1 {256 0 0 0}
 logo 0109.BMP
-BMP 7B +1 217 92 {0 0 3 14}
-PAL 2A 251 1 {251 0 0 0}
+BMP 78 +0 217 92 {0 0 3 14}
 coms 0110.BMP
 BMP 7B +1 91 26 {-384 -323 384 323}
 !PAD 2 0000
