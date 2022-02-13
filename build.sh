@@ -1,32 +1,76 @@
 #!/bin/bash
 
-SRCDIR="src"
-OUTDIR="out"
+SOURCE_DIR="src"
+BUILD_DIR="build"
+OUTPUT_DIR="out"
+ORIGINAL_DIR="original"
+GAME_DIR="/opt/nfs2se"
 
-[ -d "$OUTDIR/tools" ] || mkdir -p "$OUTDIR/tools"
-[ -d "$OUTDIR/fedata/pc/art/slides" ] || mkdir -p "$OUTDIR/fedata/pc/art/slides"
+FSHTOOL="${OUTPUT_DIR}/tools/fshtool"
 
-gcc "src/tools/fshtool.c" -o "$OUTDIR/tools/fshtool"
+[ -d "${OUTPUT_DIR}/tools" ] || mkdir -p "${OUTPUT_DIR}/tools"
+[ -d "${OUTPUT_DIR}/fedata/pc/art/slides" ] || mkdir -p "${OUTPUT_DIR}/fedata/pc/art/slides"
 
-function build_qfs {
-    FSHTOOL="$OUTDIR/tools/fshtool"
+gcc "src/tools/fshtool.c" -o "${OUTPUT_DIR}/tools/fshtool"
 
-    echo "Building $1.qfs ..."
+function extract_qfs() {
+    local FILE_PATH="${*}"
+    local FILE_DIR="$(dirname ${FILE_PATH})"
+    local FILE_NAME="$(basename ${ASSET})"
 
-    yes | "$FSHTOOL" "$SRCDIR/$1/index.fsh" "$OUTDIR/$1.qfs"
+    yes | "${FSHTOOL}" "${FILE_PATH}" "${FILE_DIR}/${FILE_NAME}"
 }
 
-### BUILD THE SLIDES
+function extract_original_qfs() {
+    local ASSET="${*}"
+    local ASSET_DIR="$(dirname ${ASSET})"
+    local ASSET_NAME="$(basename ${ASSET})"
+    local TARGET_DIR="${ORIGINAL_DIR}/${ASSET_DIR}"
+    local TARGET_FILE="${TARGET_DIR}/${ASSET_NAME}.qfs"
 
-SLIDES=$(find "$SRCDIR/fedata/pc/art/slides/" -type d -name "sld*")
+    mkdir -p "${TARGET_DIR}"
+    cp "${GAME_DIR}/${ASSET}.qfs" "${TARGET_FILE}"
+    extract_qfs "${TARGET_FILE}"
+}
 
-for SLIDE in $SLIDES ; do
-    FILE=$(basename $SLIDE)
-    NAME=${FILE%.*}
+function prepare_asset_build_dir() {
+    local ASSET="${*}"
+    local ASSET_BUILD_DIR="${BUILD_DIR}/${ASSET}"
+    local INDEX_FSH_FILE="${ORIGINAL_DIR}/${ASSET}/index.fsh"
+    local OBJECTS_COUNT=$(grep "^SHPI" "${INDEX_FSH_FILE}" | sed 's/^SHPI \([0-9][0-9]*\).*/\1/g')
 
-    build_qfs "fedata/pc/art/slides/$NAME"
-done
+    mkdir -p "${ASSET_BUILD_DIR}"
 
-build_qfs "fedata/pc/art/title"
+    for (( I=0; I<${OBJECTS_COUNT}; I++ )); do
+        local OBJECT_FILE_LABEL="$(printf %04d ${I})"
 
-### BUILD FINISHED
+        local SOURCE_ASSET_FILE="${SOURCE_DIR}/${ASSET}/${OBJECT_FILE_LABEL}.png"
+        local ORIGINAL_ASSET_FILE="${ORIGINAL_DIR}/${ASSET}/${OBJECT_FILE_LABEL}.BMP"
+
+        if [ -f "${SOURCE_ASSET_FILE}" ]; then
+            local OBJECT_WIDTH=$(cat "${INDEX_FSH_FILE}" | head -n $((8+I*2)) | tail -n 1 | awk '{print $4}')
+            local OBJECT_HEIGHT=$(cat "${INDEX_FSH_FILE}" | head -n $((8+I*2)) | tail -n 1 | awk '{print $5}')
+            convert "${SOURCE_ASSET_FILE}" -resize ${OBJECT_WIDTH}x${OBJECT_HEIGHT}! "${ASSET_BUILD_DIR}/${OBJECT_FILE_LABEL}.BMP"
+        elif [ -f "${ORIGINAL_ASSET_FILE}" ]; then
+            cp "${ORIGINAL_ASSET_FILE}" "${ASSET_BUILD_DIR}/"
+        else
+            echo "ERROR: Cannot find ${OBJECT_FILE_LABEL} for ${ASSET} !!!"
+            exit 1
+        fi
+    done
+}
+
+function build_qfs() {
+    local ASSET="${*}"
+    local ASSET_DIR="$(dirname ${ASSET})"
+
+    [ ! -d "${ORIGINAL_DIR}/${ASSET}" ] && extract_original_qfs "${ASSET}"
+
+    prepare_asset_build_dir "${ASSET}"
+
+    echo "Building ${ASSET}..."
+    mkdir -p "${OUTPUT_DIR}/${ASSET_DIR}"
+    yes | "${FSHTOOL}" "${BUILD_DIR}/${ASSET}/index.fsh" "${OUTPUT_DIR}/${ASSET}.qfs"
+}
+
+build_qfs "gamedata/tracks/se/tr000"
