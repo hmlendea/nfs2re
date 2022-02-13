@@ -78,4 +78,10 @@ function build_qfs() {
     yes | "${FSHTOOL}" "${BUILD_DIR}/${ASSET}/index.fsh" "${OUTPUT_DIR}/${ASSET}.qfs"
 }
 
+build_qfs "fedata/pc/art/main"
+build_qfs "fedata/pc/art/title"
 build_qfs "gamedata/tracks/se/tr000"
+build_qfs "gamedata/tracks/se/tr020"
+build_qfs "gamedata/tracks/se/tr030"
+build_qfs "gamedata/tracks/se/tr040"
+build_qfs "gamedata/tracks/se/tr070"
