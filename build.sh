@@ -44,7 +44,7 @@ function prepare_asset_build_dir() {
     for (( I=0; I<${OBJECTS_COUNT}; I++ )); do
         local OBJECT_FILE_LABEL="$(printf %04d ${I})"
 
-        local SOURCE_ASSET_FILE="${SOURCE_DIR}/realistic/${ASSET}/${OBJECT_FILE_LABEL}.png"
+        local SOURCE_ASSET_FILE="${SOURCE_DIR}/${ASSET}/${OBJECT_FILE_LABEL}.png"
         local ORIGINAL_ASSET_FILE="${ORIGINAL_DIR}/${ASSET}/${OBJECT_FILE_LABEL}.BMP"
 
         if [ -f "${SOURCE_ASSET_FILE}" ]; then
