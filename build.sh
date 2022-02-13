@@ -42,19 +42,19 @@ function prepare_asset_build_dir() {
     mkdir -p "${ASSET_BUILD_DIR}"
 
     for (( I=0; I<${OBJECTS_COUNT}; I++ )); do
-        local OBJECT_FILE_NAME="$(printf %04d.BMP ${I})"
+        local OBJECT_FILE_LABEL="$(printf %04d ${I})"
 
-        local SOURCE_ASSET_FILE="${SOURCE_DIR}/realistic/${ASSET}/${OBJECT_FILE_NAME}"
-        local ORIGINAL_ASSET_FILE="${ORIGINAL_DIR}/${ASSET}/${OBJECT_FILE_NAME}"
+        local SOURCE_ASSET_FILE="${SOURCE_DIR}/realistic/${ASSET}/${OBJECT_FILE_LABEL}.png"
+        local ORIGINAL_ASSET_FILE="${ORIGINAL_DIR}/${ASSET}/${OBJECT_FILE_LABEL}.BMP"
 
         if [ -f "${SOURCE_ASSET_FILE}" ]; then
             local OBJECT_WIDTH=$(cat "${INDEX_FSH_FILE}" | head -n $((8+I*2)) | tail -n 1 | awk '{print $4}')
             local OBJECT_HEIGHT=$(cat "${INDEX_FSH_FILE}" | head -n $((8+I*2)) | tail -n 1 | awk '{print $5}')
-            convert "${SOURCE_ASSET_FILE}" -resize ${OBJECT_WIDTH}x${OBJECT_HEIGHT}! "${ASSET_BUILD_DIR}/${OBJECT_FILE_NAME}.BMP"
+            convert "${SOURCE_ASSET_FILE}" -resize ${OBJECT_WIDTH}x${OBJECT_HEIGHT}! "${ASSET_BUILD_DIR}/${OBJECT_FILE_LABEL}.BMP"
         elif [ -f "${ORIGINAL_ASSET_FILE}" ]; then
             cp "${ORIGINAL_ASSET_FILE}" "${ASSET_BUILD_DIR}/"
         else
-            echo "ERROR: Cannot find ${OBJECT_FILE_NAME} for ${ASSET} !!!"
+            echo "ERROR: Cannot find ${OBJECT_FILE_LABEL} for ${ASSET} !!!"
             exit 1
         fi
     done
