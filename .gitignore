@@ -1,4 +1,6 @@
 .tmp
+build
+original
 out
 Mfc42.dll
 Msvcrt.dll
