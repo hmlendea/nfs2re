@@ -1,3 +1,4 @@
+gamedata/tracks/se/tr020,0009,house_yellow_wall,64,64
 gamedata/tracks/se/tr020,0042,bridge_skeleton_dark,64,64
 gamedata/tracks/se/tr020,0043,bridge_skeleton_dark,64,64
 gamedata/tracks/se/tr020,0044,bridge_skeleton_dark,64,64
@@ -7,7 +8,13 @@ gamedata/tracks/se/tr020,0047,bridge_skeleton_light,64,64
 gamedata/tracks/se/tr020,0048,bridge_wall_front,64,128
 gamedata/tracks/se/tr020,0049,bridge_wall_side,64,59
 gamedata/tracks/se/tr020,0050,guard_rails,64,56
+gamedata/tracks/se/tr020,0051,wall_bricks,32,32
+gamedata/tracks/se/tr020,0092,house_yellow_door,64,64
+gamedata/tracks/se/tr020,0093,house_yellow_wall,64,64
+gamedata/tracks/se/tr020,0094,house_yellow_windows,64,64
 gamedata/tracks/se/tr020,0105,grass,64,48
+gamedata/tracks/se/tr020,0114,wall_cobble,64,64
+gamedata/tracks/se/tr020,0115,wall_cobble,64,64
 gamedata/tracks/se/tr020,0147,road_left,64,64
 gamedata/tracks/se/tr020,0148,road_right,64,64
 gamedata/tracks/se/tr020,0149,road_finish,64,96
@@ -18,3 +25,4 @@ gamedata/tracks/se/tr020,0202,road_sign_turn_left,64,64
 gamedata/tracks/se/tr020,0203,road_sign_turn_right,64,64
 gamedata/tracks/se/tr020,0206,road_sign_curve_left,64,64
 gamedata/tracks/se/tr020,0207,road_sign_curve_right,64,64
+gamedata/tracks/se/tr020,0209,road_sign_winding,64,64
