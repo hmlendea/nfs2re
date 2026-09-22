@@ -56,6 +56,9 @@
 #define rmdir _rmdir
 #define mkdir(a,b) _mkdir(a)
 #define chdir _chdir
+#else
+#include <sys/stat.h>
+#include <unistd.h>
 #endif
 
 /* QFS compression quality factor */

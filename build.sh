@@ -1,9 +1,46 @@
 #!/bin/bash
+set -euo pipefail
 
-SOURCE_DIR="src"
-BUILD_DIR="build"
-OUTPUT_DIR="out"
-ORIGINAL_DIR="original"
+readonly REQUIRED_COMMANDS=(
+    pwd
+    mkdir
+    gcc
+    grep
+    awk
+    cat
+    head
+    tail
+    sed
+    dirname
+    basename
+    yes
+    cp
+    magick
+    rm
+)
+
+function check_required_commands() {
+    local MISSING_COMMANDS=()
+
+    for REQUIRED_COMMAND in "${REQUIRED_COMMANDS[@]}"; do
+        if ! command -v "${REQUIRED_COMMAND}" >/dev/null 2>&1; then
+            MISSING_COMMANDS+=("${REQUIRED_COMMAND}")
+        fi
+    done
+
+    if ((${#MISSING_COMMANDS[@]} > 0)); then
+        printf 'ERROR: Required command(s) unavailable: %s\n' "${MISSING_COMMANDS[*]}" >&2
+        exit 1
+    fi
+}
+
+check_required_commands
+
+REPO_DIR="$(pwd)"
+SOURCE_DIR="${REPO_DIR}/src"
+BUILD_DIR="${REPO_DIR}/build"
+OUTPUT_DIR="${REPO_DIR}/out"
+ORIGINAL_DIR="${REPO_DIR}/original"
 GAME_DIR="/opt/nfs2se"
 
 QFS_TEXTURES_INDEX_FILE="${SOURCE_DIR}/qfs_textures_index.csv"
@@ -47,7 +84,7 @@ function get_qfs_object_label() {
 
     if grep -q "^${QFS},${OBJECT}," "${QFS_TEXTURES_INDEX_FILE}"; then
         echo $(grep "^${QFS},${OBJECT}," "${QFS_TEXTURES_INDEX_FILE}" | awk -F, '{print $3}')
-    else
+    elif [ -f "${SOURCE_DIR}/${ASSET}/${OBJECT}.png" ]; then
         echo "${OBJECT}"
     fi
 }
@@ -94,7 +131,7 @@ function prepare_asset_build_dir() {
             local OBJECT_WIDTH=$(get_qfs_object_width "${ASSET}" "${OBJECT_FILE_LABEL}")
             local OBJECT_HEIGHT=$(get_qfs_object_height "${ASSET}" "${OBJECT_FILE_LABEL}")
 
-            convert "${SOURCE_ASSET_FILE}" \
+            magick "${SOURCE_ASSET_FILE}" \
                         -resize ${OBJECT_WIDTH}x${OBJECT_HEIGHT}! \
                         -type truecolor \
                     "${ASSET_BUILD_DIR}/${OBJECT_FILE_LABEL}.BMP"
@@ -116,15 +153,17 @@ function build_qfs() {
 
     prepare_asset_build_dir "${ASSET}"
 
+
     echo "Building ${ASSET}..."
     mkdir -p "${OUTPUT_DIR}/${ASSET_DIR}"
-    yes | "${FSHTOOL}" "${BUILD_DIR}/${ASSET}/index.fsh" "${OUTPUT_DIR}/${ASSET}.qfs"
+
+    local OUTPUT_FILE="${OUTPUT_DIR}/${ASSET}.qfs"
+
+    [ -f "${OUTPUT_FILE}" ] && rm "${OUTPUT_FILE}"
+
+    cd "${BUILD_DIR}/${ASSET}"
+    yes | "${FSHTOOL}" "index.fsh" "${OUTPUT_FILE}"
+    cd "${REPO_DIR}"
 }
 
-build_qfs "fedata/pc/art/main"
-build_qfs "fedata/pc/art/title"
-build_qfs "gamedata/tracks/se/tr000"
 build_qfs "gamedata/tracks/se/tr020"
-build_qfs "gamedata/tracks/se/tr030"
-build_qfs "gamedata/tracks/se/tr040"
-build_qfs "gamedata/tracks/se/tr070"
