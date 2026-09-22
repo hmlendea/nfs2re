@@ -118,7 +118,7 @@ function prepare_asset_build_dir() {
     local OBJECTS_COUNT=$(grep "^SHPI" "${ORIGINAL_INDEX_FSH_FILE}" | sed 's/^SHPI \([0-9][0-9]*\).*/\1/g')
 
     mkdir -p "${ASSET_BUILD_DIR}"
-    
+
     cp "${ORIGINAL_INDEX_FSH_FILE}" "${BUILD_INDEX_FSH_FILE}"
 
     for OBJECT_FILE_LABEL in $(grep ".BMP$" "${ORIGINAL_INDEX_FSH_FILE}" | sed 's/^[^ ]* \([^\.]*\).*/\1/g'); do
