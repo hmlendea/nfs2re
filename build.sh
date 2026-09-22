@@ -1,4 +1,40 @@
 #!/bin/bash
+set -euo pipefail
+
+readonly REQUIRED_COMMANDS=(
+    pwd
+    mkdir
+    gcc
+    grep
+    awk
+    cat
+    head
+    tail
+    sed
+    dirname
+    basename
+    yes
+    cp
+    magick
+    rm
+)
+
+function check_required_commands() {
+    local MISSING_COMMANDS=()
+
+    for REQUIRED_COMMAND in "${REQUIRED_COMMANDS[@]}"; do
+        if ! command -v "${REQUIRED_COMMAND}" >/dev/null 2>&1; then
+            MISSING_COMMANDS+=("${REQUIRED_COMMAND}")
+        fi
+    done
+
+    if ((${#MISSING_COMMANDS[@]} > 0)); then
+        printf 'ERROR: Required command(s) unavailable: %s\n' "${MISSING_COMMANDS[*]}" >&2
+        exit 1
+    fi
+}
+
+check_required_commands
 
 REPO_DIR="$(pwd)"
 SOURCE_DIR="${REPO_DIR}/src"
