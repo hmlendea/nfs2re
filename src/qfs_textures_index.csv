@@ -17,6 +17,9 @@ gamedata/tracks/se/tr020,0114,wall_cobble,64,64
 gamedata/tracks/se/tr020,0115,wall_cobble,64,64
 gamedata/tracks/se/tr020,0116,road_sign_winding,128,43
 gamedata/tracks/se/tr020,0124,unlit_dark_red_sandstone,64,64
+gamedata/tracks/se/tr020,0125,dim_asphalt,64,96
+gamedata/tracks/se/tr020,0126,dim_asphalt_transition_to_dark_red_sandstone,64,96
+gamedata/tracks/se/tr020,0127,asphalt,64,96
 gamedata/tracks/se/tr020,0128,dark_red_sandstone,64,64
 gamedata/tracks/se/tr020,0129,dark_red_sandstone,64,64
 gamedata/tracks/se/tr020,0130,dark_red_sandstone,64,64
