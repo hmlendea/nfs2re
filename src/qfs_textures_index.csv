@@ -1,4 +1,13 @@
+gamedata/tracks/se/tr020,0000,skybox_part1,128,256
+gamedata/tracks/se/tr020,0001,skybox_part2,128,256
+gamedata/tracks/se/tr020,0002,skybox_part3,128,256
+gamedata/tracks/se/tr020,0003,skybox_part4,128,256
+gamedata/tracks/se/tr020,0004,skybox_part5,128,256
+gamedata/tracks/se/tr020,0005,skybox_part6,128,256
+gamedata/tracks/se/tr020,0006,skybox_part7,128,256
+gamedata/tracks/se/tr020,0007,skybox_part8,128,256
 gamedata/tracks/se/tr020,0009,house_yellow_wall,64,64
+gamedata/tracks/se/tr020,0011,gray_bricks_wall,64,64
 gamedata/tracks/se/tr020,0042,bridge_skeleton_dark,64,64
 gamedata/tracks/se/tr020,0043,bridge_skeleton_dark,64,64
 gamedata/tracks/se/tr020,0044,bridge_skeleton_dark,64,64
@@ -9,13 +18,14 @@ gamedata/tracks/se/tr020,0048,bridge_wall_front,64,128
 gamedata/tracks/se/tr020,0049,bridge_wall_side,64,59
 gamedata/tracks/se/tr020,0050,guard_rails,64,56
 gamedata/tracks/se/tr020,0051,wall_bricks,32,32
+gamedata/tracks/se/tr020,0076,water,64,64
 gamedata/tracks/se/tr020,0092,house_yellow_door,64,64
 gamedata/tracks/se/tr020,0093,house_yellow_wall,64,64
 gamedata/tracks/se/tr020,0094,house_yellow_windows,64,64
 gamedata/tracks/se/tr020,0105,grass,64,48
 gamedata/tracks/se/tr020,0114,wall_cobble,64,64
 gamedata/tracks/se/tr020,0115,wall_cobble,64,64
-gamedata/tracks/se/tr020,0116,road_sign_winding,128,43
+gamedata/tracks/se/tr020,0116,pub_sign,128,43
 gamedata/tracks/se/tr020,0124,unlit_dark_red_sandstone,64,64
 gamedata/tracks/se/tr020,0125,dim_asphalt,64,96
 gamedata/tracks/se/tr020,0126,dim_asphalt_transition_to_dark_red_sandstone,64,96
@@ -41,6 +51,7 @@ gamedata/tracks/se/tr020,0151,gravel,64,64
 gamedata/tracks/se/tr020,0152,gravel,64,64
 gamedata/tracks/se/tr020,0153,gravel,64,64
 gamedata/tracks/se/tr020,0154,gravel,64,64
+gamedata/tracks/se/tr020,0160,water_transition_to_gravel,64,64
 gamedata/tracks/se/tr020,0163,crate,64,48
 gamedata/tracks/se/tr020,0167,road_sign_speedlimit_100,64,100
 gamedata/tracks/se/tr020,0168,road_sign_kangaroo,64,64
