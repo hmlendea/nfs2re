@@ -11,6 +11,7 @@ readonly REQUIRED_COMMANDS=(
     head
     tail
     sed
+    wc
     dirname
     basename
     yes
@@ -46,6 +47,19 @@ GAME_DIR="/opt/nfs2se"
 QFS_TEXTURES_INDEX_FILE="${SOURCE_DIR}/qfs_textures_index.csv"
 
 FSHTOOL="${OUTPUT_DIR}/tools/fshtool"
+USE_ORIGINAL_TEXTURE_SIZES=false
+
+for BUILD_OPTION in "$@"; do
+    case "${BUILD_OPTION}" in
+        --original-texture-sizes)
+            USE_ORIGINAL_TEXTURE_SIZES=true
+            ;;
+        *)
+            printf 'ERROR: Unknown option: %s\n' "${BUILD_OPTION}" >&2
+            exit 1
+            ;;
+    esac
+done
 
 [ -d "${OUTPUT_DIR}/tools" ] || mkdir -p "${OUTPUT_DIR}/tools"
 [ -d "${OUTPUT_DIR}/fedata/pc/art/slides" ] || mkdir -p "${OUTPUT_DIR}/fedata/pc/art/slides"
@@ -57,7 +71,10 @@ function get_qfs_object_width() {
     local OBJECT="${2}"
     local INDEX_FSH_FILE="${ORIGINAL_DIR}/${QFS}/index.fsh"
 
-    if grep -q "^${QFS},${OBJECT}," "${QFS_TEXTURES_INDEX_FILE}"; then
+    if [[ "${USE_ORIGINAL_TEXTURE_SIZES}" == true ]]; then
+        local SOURCE_OBJECT_FILE_LABEL="$(get_qfs_object_label "${QFS}" "${OBJECT}")"
+        magick identify -format '%w' "${SOURCE_DIR}/${QFS}/${SOURCE_OBJECT_FILE_LABEL}.png"
+    elif grep -q "^${QFS},${OBJECT}," "${QFS_TEXTURES_INDEX_FILE}"; then
         echo $(grep "^${QFS},${OBJECT}," "${QFS_TEXTURES_INDEX_FILE}" | awk -F, '{print $4}')
     else
         local OBJECT_LINE_NUMBER=$(grep -n "${OBJECT}.BMP$" "${INDEX_FSH_FILE}" | awk -F: '{print $1}')
@@ -70,7 +87,10 @@ function get_qfs_object_height() {
     local OBJECT="${2}"
     local INDEX_FSH_FILE="${ORIGINAL_DIR}/${QFS}/index.fsh"
 
-    if grep -q "^${QFS},${OBJECT}," "${QFS_TEXTURES_INDEX_FILE}"; then
+    if [[ "${USE_ORIGINAL_TEXTURE_SIZES}" == true ]]; then
+        local SOURCE_OBJECT_FILE_LABEL="$(get_qfs_object_label "${QFS}" "${OBJECT}")"
+        magick identify -format '%h' "${SOURCE_DIR}/${QFS}/${SOURCE_OBJECT_FILE_LABEL}.png"
+    elif grep -q "^${QFS},${OBJECT}," "${QFS_TEXTURES_INDEX_FILE}"; then
         echo $(grep "^${QFS},${OBJECT}," "${QFS_TEXTURES_INDEX_FILE}" | awk -F, '{print $5}')
     else
         local OBJECT_LINE_NUMBER=$(grep -n "${OBJECT}.BMP$" "${INDEX_FSH_FILE}" | awk -F: '{print $1}')
@@ -84,7 +104,7 @@ function get_qfs_object_label() {
 
     if grep -q "^${QFS},${OBJECT}," "${QFS_TEXTURES_INDEX_FILE}"; then
         echo $(grep "^${QFS},${OBJECT}," "${QFS_TEXTURES_INDEX_FILE}" | awk -F, '{print $3}')
-    elif [ -f "${SOURCE_DIR}/${ASSET}/${OBJECT}.png" ]; then
+    elif [ -f "${SOURCE_DIR}/${QFS}/${OBJECT}.png" ]; then
         echo "${OBJECT}"
     fi
 }
@@ -118,7 +138,7 @@ function prepare_asset_build_dir() {
     local OBJECTS_COUNT=$(grep "^SHPI" "${ORIGINAL_INDEX_FSH_FILE}" | sed 's/^SHPI \([0-9][0-9]*\).*/\1/g')
 
     mkdir -p "${ASSET_BUILD_DIR}"
-    
+
     cp "${ORIGINAL_INDEX_FSH_FILE}" "${BUILD_INDEX_FSH_FILE}"
 
     for OBJECT_FILE_LABEL in $(grep ".BMP$" "${ORIGINAL_INDEX_FSH_FILE}" | sed 's/^[^ ]* \([^\.]*\).*/\1/g'); do
@@ -143,6 +163,17 @@ function prepare_asset_build_dir() {
             exit 1
         fi
     done
+
+    if [[ "${USE_ORIGINAL_TEXTURE_SIZES}" == true ]]; then
+        local TOTAL_BMP_BYTES=0
+
+        for BUILD_ASSET_FILE in "${ASSET_BUILD_DIR}"/*.BMP; do
+            TOTAL_BMP_BYTES=$((TOTAL_BMP_BYTES + $(wc -c < "${BUILD_ASSET_FILE}")))
+        done
+
+        local BUFSZ=$((TOTAL_BMP_BYTES + 500000))
+        sed -i "s/^BUFSZ .*/BUFSZ ${BUFSZ}/" "${BUILD_INDEX_FSH_FILE}"
+    fi
 }
 
 function build_qfs() {
