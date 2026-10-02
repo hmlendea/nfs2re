@@ -55,6 +55,7 @@ gamedata/tracks/se/tr020,0160,water_transition_to_gravel,64,64
 gamedata/tracks/se/tr020,0163,crate,64,48
 gamedata/tracks/se/tr020,0167,road_sign_speedlimit_100,64,100
 gamedata/tracks/se/tr020,0168,road_sign_kangaroo,64,64
+gamedata/tracks/se/tr020,0195,minecart_body,128,160
 gamedata/tracks/se/tr020,0202,road_sign_turn_left,64,64
 gamedata/tracks/se/tr020,0203,road_sign_turn_right,64,64
 gamedata/tracks/se/tr020,0206,road_sign_curve_left,64,64
